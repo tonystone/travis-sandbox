@@ -65,7 +65,7 @@ matrix:
       osx_image: xcode8
       env: 
          - BUILD="xcodebuild"
-         - DEST="platform=OS X,arch=x86_64" 
+         - TEST_DEST="platform=OS X,arch=x86_64" 
          - TEST_SDK=macosx
          - SCHEME=TraceLog-OSX-Example 
          
