@@ -1,0 +1,23 @@
+os:
+  - linux
+  - osx
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then gem install xcpretty -N --no-ri --no-rdoc ; fi
+
+env:
+  include:
+        - os: linux
+          sudo: required
+          env: COMMAND="swift build"
+        - os: osx
+          language: objective-c
+          osx_image: xcode8
+          env: COMMAND="xcodebuild -destination: platform=iOS Simulator,OS=10.0,name=iPhone 6s -sdk iphonesimulator"
+        - os: osx
+          language: objective-c
+          osx_image: xcode8
+          env: COMMAND="xcodebuild -destination: platform=OS X,arch=x86_64 -sdk macosx"
+
+script:
+  - echo $COMMAND
