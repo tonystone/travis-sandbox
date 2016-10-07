@@ -18,10 +18,13 @@ matrix:
       os: linux
       dist: trusty
       sudo: required
+      env: 
+         - BUILD="swift build"
     - 
       os: osx
       osx_image: xcode8
       env: 
+         - BUILD="xcodebuild"
          - TEST_DEST="platform=iOS Simulator,OS=10.0,name=iPhone 6s" 
          - TEST_SDK=iphonesimulator
          - SCHEME=TraceLog-iOS-Example 
@@ -29,6 +32,7 @@ matrix:
       os: osx
       osx_image: xcode8
       env: 
+         - BUILD="xcodebuild"
          - TEST_DEST="platform=iOS Simulator,OS=10.0,name=iPhone 6" 
          - TEST_SDK=iphonesimulator
          - SCHEME=TraceLog-iOS-Example 
@@ -36,6 +40,7 @@ matrix:
       os: osx
       osx_image: xcode8
       env: 
+         - BUILD="xcodebuild"
          - TEST_DEST="platform=iOS Simulator,OS=9.3,name=iPhone 6" 
          - TEST_SDK=iphonesimulator
          - SCHEME=TraceLog-iOS-Example 
@@ -43,6 +48,7 @@ matrix:
       os: osx
       osx_image: xcode8
       env: 
+         - BUILD="xcodebuild"
          - TEST_DEST="platform=iOS Simulator,OS=9.2,name=iPhone 5s" 
          - TEST_SDK=iphonesimulator
          - SCHEME=TraceLog-iOS-Example 
@@ -50,6 +56,7 @@ matrix:
       os: osx
       osx_image: xcode8
       env: 
+         - BUILD="xcodebuild"
          - TEST_DEST="platform=iOS Simulator,OS=9.0,name=iPhone 4s" 
          - TEST_SDK=iphonesimulator
          - SCHEME=TraceLog-iOS-Example 
@@ -57,15 +64,16 @@ matrix:
       os: osx
       osx_image: xcode8
       env: 
-         - TEST_DEST="platform=OS X,arch=x86_64" 
+         - BUILD="xcodebuild"
+         - DEST="platform=OS X,arch=x86_64" 
          - TEST_SDK=macosx
          - SCHEME=TraceLog-OSX-Example 
          
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then echo "swift build" ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then echo "swift test" ; fi
+  - if [[ "$BUILD" == "swift build" ]]; then echo "swift build" ; fi
+  - if [[ "$BUILD" == "swift build"  ]]; then echo "swift test" ; fi
   
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo "xcodebuild clean test -workspace Example/TraceLog.xcworkspace -scheme \"$SCHEME\" -destination \"$TEST_DEST\" -sdk \"$TEST_SDK\" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty" ; fi
+  - if [[ "$BUILD" == "xcodebuild"  ]]; then echo "xcodebuild clean test -workspace Example/TraceLog.xcworkspace -scheme \"$SCHEME\" -destination \"$TEST_DEST\" -sdk \"$TEST_SDK\" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty" ; fi
 
 after_success:
   - echo "bash <(curl -s https://codecov.io/bash)"
