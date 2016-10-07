@@ -1,7 +1,7 @@
 language: generic
 
 before_install:
-  - "if [[ \"$TRAVIS_OS_NAME\" == \"osx\" ]]; then gem install xcpretty -N --no-ri --no-rdoc ; fi"
+  - if [[ \"$TRAVIS_OS_NAME\" == \"osx\" ]]; then gem install xcpretty -N --no-ri --no-rdoc ; fi
 
 git:
   submodules: false
@@ -12,7 +12,6 @@ matrix:
       os: linux
       dist: trusty
       sudo: required
-      script: "echo swift build"
     - 
       os: osx
       osx_image: xcode8
@@ -20,15 +19,18 @@ matrix:
          - SCHEME=TraceLog-iOS-Example 
          - TEST_DEST="platform=iOS Simulator,OS=10.0,name=iPhone 6s" 
          - TEST_SDK=iphonesimulator
-      script: 
-        - set -o pipefail
-        - echo "xcodebuild clean test -workspace Example/TraceLog.xcworkspace -scheme $SCHEME -destination $TEST_DEST -sdk $TEST_SDK GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty"
     - 
       os: osx
       osx_image: xcode8
-      script:
-        - set -o pipefail
-        - "echo \"xcodebuild -destination platform=OS X,arch=x86_64 -sdk macosx\""
+      env: 
+         - SCHEME=TraceLog-iOS-Example 
+         - TEST_DEST="platform=iOS Simulator,OS=10.0,name=iPhone 6" 
+         - TEST_SDK=iphonesimulator
 
+
+script:
+  - if [[ \"$TRAVIS_OS_NAME\" == \"osx\" ]]; then echo "xcodebuild clean test -workspace Example/TraceLog.xcworkspace -scheme $SCHEME -destination $TEST_DEST -sdk $TEST_SDK GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty" ; fi
+  - if [[ \"$TRAVIS_OS_NAME\" == \"linux\" ]]; then echo "swift build" ; fi
+  
 after_success:
   - echo "bash <(curl -s https://codecov.io/bash)"
