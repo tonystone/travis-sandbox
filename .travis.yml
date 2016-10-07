@@ -75,10 +75,10 @@ matrix:
          - SCHEME=TraceLog-OSX-Example 
          
 script:
-  - if [[ "$BUILD" == "swift build" ]]; then echo swift build ; fi
-  - if [[ "$BUILD" == "swift build"  ]]; then echo swift test ; fi
+  - if [[ "$BUILD" == "swift build" ]]; then swift build ; fi
+  - if [[ "$BUILD" == "swift build"  ]]; then swift test ; fi
   
-  - if [[ "$BUILD" == "xcodebuild"  ]]; then echo xcodebuild clean test -workspace Example/TraceLog.xcworkspace -scheme "$SCHEME" -destination "$TEST_DEST" -sdk "$TEST_SDK" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty ; fi
+  - if [[ "$BUILD" == "xcodebuild"  ]]; then xcodebuild clean test -workspace Example/TraceLog.xcworkspace -scheme "$SCHEME" -destination "$TEST_DEST" -sdk "$TEST_SDK" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty ; fi
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
