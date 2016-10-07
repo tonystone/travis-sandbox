@@ -8,9 +8,16 @@ git:
 
 matrix:
   include:
-    - os: linux
+    - 
+      os: linux
       dist: trusty
       sudo: required
-    - os: osx
+      script: "echo swift build"
+    - 
+      os: osx
       osx_image: xcode8
-      sudo: required
+      script: "echo \"xcodebuild -destination platform=iOS Simulator,OS=10.0,name=iPhone 6s -sdk iphonesimulator\""
+    - 
+      os: osx
+      osx_image: xcode8
+      script: "echo \"xcodebuild -destination platform=OS X,arch=x86_64 -sdk macosx\""
