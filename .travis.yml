@@ -16,9 +16,13 @@ matrix:
     - 
       os: osx
       osx_image: xcode8
+      env: 
+         - SCHEME=TraceLog-iOS-Example 
+         - TEST_DEST="platform=iOS Simulator,OS=10.0,name=iPhone 6s" 
+         - TEST_SDK=iphonesimulator
       script: 
         - set -o pipefail
-        - "echo \"xcodebuild -destination platform=iOS Simulator,OS=10.0,name=iPhone 6s -sdk iphonesimulator\""
+        - echo "xcodebuild clean test -workspace Example/TraceLog.xcworkspace -scheme $SCHEME -destination $TEST_DEST -sdk $TEST_SDK GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty"
     - 
       os: osx
       osx_image: xcode8
