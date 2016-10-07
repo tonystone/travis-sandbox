@@ -1,9 +1,5 @@
 language: generic
 
-os: 
-  - linux
-  - osx
-
 before_install:
   - "if [[ \"$TRAVIS_OS_NAME\" == \"osx\" ]]; then gem install xcpretty -N --no-ri --no-rdoc ; fi"
 
