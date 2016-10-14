@@ -1,8 +1,8 @@
-import UIKit
+import Foundation
 import XCTest
 import TravisSandbox
 
-class Tests: XCTestCase {
+class TravisSandboxTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

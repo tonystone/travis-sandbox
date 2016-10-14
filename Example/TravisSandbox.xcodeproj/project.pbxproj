@@ -14,8 +14,8 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		EAAFD6D11DB10BE30015B9A4 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFD6D01DB10BE30015B9A4 /* Tests.swift */; };
 		EAAFD6D21DB10BE90015B9A4 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAAFD6CE1DB10BD00015B9A4 /* Info.plist */; };
+		EAAFD6DA1DB1145B0015B9A4 /* TravisSandboxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFD6D91DB1145B0015B9A4 /* TravisSandboxTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +50,10 @@
 		EAAFD6CC1DB10B030015B9A4 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; name = .travis.yml; path = ../.travis.yml; sourceTree = "<group>"; };
 		EAAFD6CD1DB10B030015B9A4 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Gemfile; path = ../Gemfile; sourceTree = "<group>"; };
 		EAAFD6CE1DB10BD00015B9A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../Tests/Info.plist; sourceTree = "<group>"; };
-		EAAFD6D01DB10BE30015B9A4 /* Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tests.swift; path = ../../Tests/Tests.swift; sourceTree = "<group>"; };
+		EAAFD6D31DB1133D0015B9A4 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../Package.swift; sourceTree = "<group>"; };
+		EAAFD6D91DB1145B0015B9A4 /* TravisSandboxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TravisSandboxTests.swift; path = ../Tests/TravisSandboxTests/TravisSandboxTests.swift; sourceTree = "<group>"; };
+		EAAFD6DE1DB114B80015B9A4 /* LinuxMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LinuxMain.swift; path = ../Tests/LinuxMain.swift; sourceTree = SOURCE_ROOT; };
+		EAAFD6E01DB115970015B9A4 /* TravisSandboxTests+XCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TravisSandboxTests+XCTest.swift"; path = "../Tests/TravisSandboxTests/TravisSandboxTests+XCTest.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,11 +133,12 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				EAAFD6D01DB10BE30015B9A4 /* Tests.swift */,
+				EAAFD6DE1DB114B80015B9A4 /* LinuxMain.swift */,
+				EAAFD6D41DB113BA0015B9A4 /* TravisSandboxTests */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		607FACE91AFB9204008FA782 /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -153,9 +157,19 @@
 				EAAFD6CC1DB10B030015B9A4 /* .travis.yml */,
 				EAAFD6CD1DB10B030015B9A4 /* Gemfile */,
 				EAAFD6CB1DB10B030015B9A4 /* .gitignore */,
+				EAAFD6D31DB1133D0015B9A4 /* Package.swift */,
 			);
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
+		};
+		EAAFD6D41DB113BA0015B9A4 /* TravisSandboxTests */ = {
+			isa = PBXGroup;
+			children = (
+				EAAFD6D91DB1145B0015B9A4 /* TravisSandboxTests.swift */,
+				EAAFD6E01DB115970015B9A4 /* TravisSandboxTests+XCTest.swift */,
+			);
+			name = TravisSandboxTests;
+			sourceTree = SOURCE_ROOT;
 		};
 		ED99273F4A5BEDE718A409E5 /* Frameworks */ = {
 			isa = PBXGroup;
@@ -378,7 +392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAAFD6D11DB10BE30015B9A4 /* Tests.swift in Sources */,
+				EAAFD6DA1DB1145B0015B9A4 /* TravisSandboxTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
