@@ -1,0 +1,16 @@
+PODS:
+  - TravisSandbox (0.1.0)
+
+DEPENDENCIES:
+  - TravisSandbox (from `../`)
+
+EXTERNAL SOURCES:
+  TravisSandbox:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  TravisSandbox: bed259b0c23b97abe47768736d9cd4669e19da84
+
+PODFILE CHECKSUM: 902c9383a245dd4c1c1a6ca7dba0daa5f50a3dbe
+
+COCOAPODS: 1.1.0.rc.3

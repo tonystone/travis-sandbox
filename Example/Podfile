@@ -1,0 +1,9 @@
+use_frameworks!
+
+target 'TravisSandbox_Example' do
+  pod 'TravisSandbox', :path => '../'
+
+  target 'TravisSandbox_Tests' do
+    inherit! :search_paths
+  end
+end

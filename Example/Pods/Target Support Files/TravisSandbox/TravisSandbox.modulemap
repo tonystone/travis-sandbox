@@ -1,0 +1,6 @@
+framework module TravisSandbox {
+  umbrella header "TravisSandbox-umbrella.h"
+
+  export *
+  module * { export * }
+}
