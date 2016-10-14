@@ -48,7 +48,7 @@
 		EA6DF9C162F5481376993782 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		EAAFD6CB1DB10B030015B9A4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
 		EAAFD6CC1DB10B030015B9A4 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; name = .travis.yml; path = ../.travis.yml; sourceTree = "<group>"; };
-		EAAFD6CD1DB10B030015B9A4 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Gemfile; path = ../Gemfile; sourceTree = "<group>"; };
+		EAAFD6CD1DB10B030015B9A4 /* Gemfile.osx */ = {isa = PBXFileReference; lastKnownFileType = text; name = Gemfile.osx; path = ../Gemfile.osx; sourceTree = "<group>"; };
 		EAAFD6CE1DB10BD00015B9A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../Tests/Info.plist; sourceTree = "<group>"; };
 		EAAFD6D31DB1133D0015B9A4 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../Package.swift; sourceTree = "<group>"; };
 		EAAFD6D91DB1145B0015B9A4 /* TravisSandboxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TravisSandboxTests.swift; path = ../Tests/TravisSandboxTests/TravisSandboxTests.swift; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 				EA6DF9C162F5481376993782 /* README.md */,
 				2CF63A6848CB8466C7653864 /* LICENSE */,
 				EAAFD6CC1DB10B030015B9A4 /* .travis.yml */,
-				EAAFD6CD1DB10B030015B9A4 /* Gemfile */,
+				EAAFD6CD1DB10B030015B9A4 /* Gemfile.osx */,
 				EAAFD6CB1DB10B030015B9A4 /* .gitignore */,
 				EAAFD6D31DB1133D0015B9A4 /* Package.swift */,
 			);
