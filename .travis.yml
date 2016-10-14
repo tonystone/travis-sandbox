@@ -23,7 +23,7 @@ matrix:
          - BUILD="xcodebuild"
          - TEST_DEST="platform=iOS Simulator,OS=10.0,name=iPhone 6s" 
          - TEST_SDK=iphonesimulator
-         - SCHEME=TraceLog-iOS-Example 
+         - SCHEME=TravisSandbox-Example
 
    
 before_install:
@@ -39,7 +39,5 @@ before_install:
 script:
   - if [[ "$BUILD" == "swift build"  ]]; then echo "swift test" ; fi
   - if [[ "$BUILD" == "pod lint"  ]]; then bundler exec pod --version ; fi  
-  - if [[ "$BUILD" == "xcodebuild"  ]]; then echo "Build succeeded" | bundler exec xcpretty ; fi
+  - if [[ "$BUILD" == "xcodebuild"  ]]; then xcodebuild clean test -workspace Example/TravisSandbox.xcworkspace -scheme "$SCHEME" -destination "$TEST_DEST" -sdk "$TEST_SDK" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | bundler exec xcpretty ; fi
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
