@@ -37,7 +37,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install clang-3.8 lldb-3.8 libicu-dev  ; fi
   
 script:
-  - if [[ "$BUILD" == "swift build"  ]]; then echo "swift test" ; fi
+  - if [[ "$BUILD" == "swift build"  ]]; then swift test ; fi
   - if [[ "$BUILD" == "pod lint"  ]]; then bundler exec pod --version ; fi  
   - if [[ "$BUILD" == "xcodebuild"  ]]; then xcodebuild clean test -workspace Example/TravisSandbox.xcworkspace -scheme "$SCHEME" -destination "$TEST_DEST" -sdk "$TEST_SDK" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | bundler exec xcpretty ; fi
 
