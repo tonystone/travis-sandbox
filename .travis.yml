@@ -14,16 +14,17 @@ matrix:
     - 
       os: osx
       osx_image: xcode8
-      env: 
+      env:
          - BUILD="pod lint"
     - 
       os: osx
       osx_image: xcode8
-      env: 
+      xcode_project: Example/TravisSandbox-Example.xcodeproj
+      xcode_scheme: TravisSandbox-Example
+      xcode_sdk: iphonesimulator
+      env:
          - BUILD="xcodebuild"
-         - TEST_DEST="platform=iOS Simulator,OS=10.0,name=iPhone 6s" 
-         - TEST_SDK=iphonesimulator
-         - SCHEME=TravisSandbox-Example
+         - TEST_DEST="platform=iOS Simulator,OS=10.0,name=iPhone 6s"
 
    
 before_install:
@@ -46,5 +47,5 @@ before_install:
 script:
   - if [[ "$BUILD" == "swift build"  ]]; then swift test ; fi
   - if [[ "$BUILD" == "pod lint"  ]]; then bundler exec pod --version ; fi  
-  - if [[ "$BUILD" == "xcodebuild"  ]]; then xcodebuild clean test -workspace Example/TravisSandbox.xcworkspace -scheme "$SCHEME" -destination "$TEST_DEST" -sdk "$TEST_SDK" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | bundler exec xcpretty ; fi
+  - if [[ "$BUILD" == "xcodebuild"  ]]; then xcodebuild clean test -workspace "$TRAVIS_XCODE_WORKSPACE" -scheme "$TRAVIS_XCODE_SCHEME" -destination "$TEST_DEST" -sdk "$TRAVIS_XCODE_SDK" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | bundler exec xcpretty ; fi
 
