@@ -5,24 +5,23 @@ git:
 
 matrix:
   include:
-    - 
-      os: linux
+    - os: linux
       dist: trusty
       sudo: required
       script: *build_swift_pm
-    -
-      os: osx
+
+    - os: osx
       osx_image: xcode8
       script: *pod_lint
-    -
-      os: osx
+
+    - os: osx
       osx_image: xcode8
       xcode_workspace: Example/TravisSandbox-Example.xcworkspace
       xcode_scheme: TravisSandbox-Example
       xcode_sdk: iphonesimulator
       env:
          - TEST_DEST="platform=iOS Simulator,OS=10.0,name=iPhone 6s"
-    script: *build_xcodebuild
+      script: *build_xcodebuild
 
 before_install:
   #
@@ -51,6 +50,6 @@ script_default: &build_xcodebuild
 script_default: &pod_lint
     - bundler exe pod lint
 
-script_default: &build_siwft_pm
+script_default: &build_swift_pm
     - swift test
 
