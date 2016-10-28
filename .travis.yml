@@ -9,44 +9,20 @@ matrix:
       os: linux
       dist: trusty
       sudo: required
-      env: 
-         - BUILD="swift build"
-    - 
+      script: *build_swift_pm
+    -
       os: osx
       osx_image: xcode8
-      env:
-         - BUILD="pod lint"
-    - 
+      script: *pod_lint
+    -
       os: osx
       osx_image: xcode8
       xcode_workspace: Example/TravisSandbox-Example.xcworkspace
       xcode_scheme: TravisSandbox-Example
       xcode_sdk: iphonesimulator
       env:
-         - BUILD="xcodebuild"
          - TEST_DEST="platform=iOS Simulator,OS=10.0,name=iPhone 6s"
-
-script_default: &build_and_test
-    # still happening as of sept 27, 2016: https://github.com/travis-ci/travis-ci/issues/6307
-    - |
-      if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-        rvm get head || true
-      fi
-    - |
-      if [[ "$BUILD" == "swift build"  ]]; then
-        swift test ;
-      fi
-    - |
-      if [[ "$BUILD" == "pod lint"  ]]; then
-        bundler exec pod --version ;
-      fi
-    - |
-      if [[ "$BUILD" == "xcodebuild"  ]]; then
-        set -o pipefail
-        xcodebuild clean build -workspace "$TRAVIS_XCODE_WORKSPACE" -scheme "$TRAVIS_XCODE_SCHEME" -sdk "$TRAVIS_XCODE_SDK" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | bundler exec xcpretty
-        xcodebuild test -workspace "$TRAVIS_XCODE_WORKSPACE" -scheme "$TRAVIS_XCODE_SCHEME" -destination "$TEST_DEST" -sdk "$TRAVIS_XCODE_SDK" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | bundler exec xcpretty
-      fi
-
+    script: *build_xcodebuild
 
 before_install:
   #
@@ -64,5 +40,17 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then tar xzvf swift-3.0-RELEASE-ubuntu14.04.tar.gz    ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export PATH=swift-3.0-RELEASE-ubuntu14.04/usr/bin:$PATH    ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install clang-3.8 lldb-3.8 libicu-dev  ; fi
-  
-script: *build_and_test
+
+script_default: &build_xcodebuild
+    # still happening as of sept 27, 2016: https://github.com/travis-ci/travis-ci/issues/6307
+    - rvm get head || true
+    - set -o pipefail
+    - xcodebuild clean build -workspace "$TRAVIS_XCODE_WORKSPACE" -scheme "$TRAVIS_XCODE_SCHEME" -sdk "$TRAVIS_XCODE_SDK" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | bundler exec xcpretty
+    - xcodebuild test -workspace "$TRAVIS_XCODE_WORKSPACE" -scheme "$TRAVIS_XCODE_SCHEME" -destination "$TEST_DEST" -sdk "$TRAVIS_XCODE_SDK" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | bundler exec xcpretty
+
+script_default: &pod_lint
+    - bundler exe pod lint
+
+script_default: &build_siwft_pm
+    - swift test
+
