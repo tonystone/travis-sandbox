@@ -3,6 +3,11 @@ language: generic
 git:
   submodules: false
 
+env:
+  global:
+    - WORKSPACE=Example/TravisSandbox.xcworkspace
+    - SCHEME=TravisSandbox-Example
+
 matrix:
   include:
     - 
@@ -14,22 +19,27 @@ matrix:
     - 
       os: osx
       osx_image: xcode8
-      env: 
+      env:
          - BUILD="pod lint"
     - 
       os: osx
       osx_image: xcode8
-      env: 
+      env:
          - BUILD="xcodebuild"
-         - TEST_DEST="platform=iOS Simulator,OS=10.0,name=iPhone 6s" 
+         - TEST_DEST="platform=iOS Simulator,OS=9.2,name=iPhone 5s" 
          - TEST_SDK=iphonesimulator
-         - SCHEME=TravisSandbox-Example
 
-   
 before_install:
+  #
+  # If there is a Gemfile for this os, install bundler and ask bundler to install the gems
+  #
+  - if [ -e Gemfile."$TRAVIS_OS_NAME" ]; then export BUNDLE_GEMFILE=Gemfile."$TRAVIS_OS_NAME" ; fi
   - if [ -e Gemfile."$TRAVIS_OS_NAME" ]; then gem install bundler ; fi
-  - if [ -e Gemfile."$TRAVIS_OS_NAME" ]; then bundler install --gemfile Gemfile."$TRAVIS_OS_NAME" ; fi
-  
+  - if [ -e Gemfile."$TRAVIS_OS_NAME" ]; then bundler install ; fi
+
+  #
+  # Linux requires downloading Swift and tools
+  #
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -y ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget https://swift.org/builds/swift-3.0-release/ubuntu1404/swift-3.0-RELEASE/swift-3.0-RELEASE-ubuntu14.04.tar.gz    ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then tar xzvf swift-3.0-RELEASE-ubuntu14.04.tar.gz    ; fi
@@ -39,5 +49,11 @@ before_install:
 script:
   - if [[ "$BUILD" == "swift build"  ]]; then swift test ; fi
   - if [[ "$BUILD" == "pod lint"  ]]; then bundler exec pod --version ; fi  
-  - if [[ "$BUILD" == "xcodebuild"  ]]; then xcodebuild clean test -workspace Example/TravisSandbox.xcworkspace -scheme "$SCHEME" -destination "$TEST_DEST" -sdk "$TEST_SDK" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | bundler exec xcpretty ; fi
+  - |
+    if [[ "$BUILD" == "xcodebuild"  ]]; then
+        set -o pipefail
+        xcodebuild clean build -workspace "$WORKSPACE" -scheme "$SCHEME" -destination "$TEST_DEST" -sdk "$TEST_SDK" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | bundler exec xcpretty
+        xcodebuild test        -workspace "$WORKSPACE" -scheme "$SCHEME" -destination "$TEST_DEST" -sdk "$TEST_SDK" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | bundler exec xcpretty
+    fi
+
 
