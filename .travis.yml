@@ -3,6 +3,11 @@ language: generic
 git:
   submodules: false
 
+env:
+  global:
+    - WORKSPACE=Example/TravisSandbox-Example.xcworkspace
+    - SCHEME=TravisSandbox-Example
+
 matrix:
   include:
     - 
