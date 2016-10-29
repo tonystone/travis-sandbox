@@ -5,7 +5,7 @@ git:
 
 env:
   global:
-    - WORKSPACE=Example/TravisSandbox-Example.xcworkspace
+    - WORKSPACE=Example/TravisSandbox.xcworkspace
     - SCHEME=TravisSandbox-Example
 
 matrix:
